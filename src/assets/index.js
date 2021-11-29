@@ -1,5 +1,0 @@
-export {default as SvgCart} from './SvgCart'
-export {default as SvgX} from './SvgX'
-export {default as Img1} from './img1.png'
-export {default as Img2} from './img2.jpg'
-export {default as Img3} from './img3.jpg'
