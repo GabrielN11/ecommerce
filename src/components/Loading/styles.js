@@ -20,11 +20,17 @@ export const LoadingDiv = styled.div`
     z-index: 10;
 `
 
+export const SideLoadingDiv = styled.div`
+    position: fixed;
+    bottom: 50px;
+    right: 25px;
+`
+
 export const Spin = styled.div`
-    width: 60px;
-    height: 60px;
+    width: ${({size}) => size + 'px'};
+    height: ${({size}) => size + 'px'};
     border-radius: 50%;
-    border: 10px solid #cf8502;
+    border: 10px solid #0071DC;
     border-right-color: transparent;
     animation: ${loading} 1s infinite;   
 `

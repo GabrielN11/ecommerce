@@ -7,7 +7,7 @@ const Loading = ({loading}) => {
 
     return (
         <LoadingDiv>
-            <Spin/>
+            <Spin size={60}/>
         </LoadingDiv>
     )
 }

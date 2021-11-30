@@ -16,11 +16,12 @@ function App() {
 }
 
 function Ecommerce() {
-  const { loading, alert, fetchCart } = React.useContext(GlobalContext)
+  const { loading, alert, fetchCart, getCategories } = React.useContext(GlobalContext)
 
   React.useEffect(() => {
     fetchCart()
-  }, [fetchCart])
+    getCategories()
+  }, [fetchCart, getCategories])
 
 
   return (

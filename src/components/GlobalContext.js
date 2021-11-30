@@ -7,10 +7,17 @@ export const GlobalContext = React.createContext()
 export const GlobalProvider = ({ children }) => {
     const [products, setProducts] = React.useState([])
     const [cart, setCart] = React.useState({})
+    const [categories, setCategories] = React.useState([])
     const [loading, setLoading] = React.useState(false)
+    const [sideLoading, setSideLoading] = React.useState(false)
     const [sideCart, setSideCart] = React.useState(false)
 
     const {alert, displayAlert} = useAlert()
+
+    const getCategories = React.useCallback(async () => {
+        const {data} = await commerce.categories.list()
+        setCategories(data)
+    }, [])
 
     const handleAddToCart = React.useCallback(async (productId, quantity, name) => {
         const item = await commerce.cart.add(productId, quantity)
@@ -20,13 +27,25 @@ export const GlobalProvider = ({ children }) => {
     }, [displayAlert])
 
     const handleUpdateCart = async (productId, quantity) => {
+        setSideLoading(true)
         const item = await commerce.cart.update(productId, {quantity})
         setCart(item.cart)
+        setSideLoading(false)
     }
 
     const removeFromCart = async (productId) => {
+        setSideLoading(true)
         const item = await commerce.cart.remove(productId)
         setCart(item.cart)
+        setSideLoading(false)
+    }
+
+    const emptyCart = async () => {
+        setSideLoading(true)
+        const item = await commerce.cart.empty()
+        setCart(item.cart)
+        setSideLoading(false)
+        displayAlert('O carrinho foi esvaziado.', '', 3000)
     }
 
     const fetchProducts = React.useCallback(async () => {
@@ -41,12 +60,14 @@ export const GlobalProvider = ({ children }) => {
         setCart(cart)
     }, [])
 
-    console.log(cart)
+    console.log(categories)
+    console.log(products)
+
     return (
         <GlobalContext.Provider value={{
-            cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
+            getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
-            removeFromCart
+            removeFromCart, emptyCart, setSideLoading, sideLoading
         }}>
             {children}
         </GlobalContext.Provider>

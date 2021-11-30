@@ -69,6 +69,12 @@ export const CartInfo = styled.div`
     margin: 0 30px;
 `
 
+export const TotalPrice = styled.h1`
+    font-weight: bolder;
+    font-size: 1.7rem;
+    margin: 0;
+`
+
 export const CartQuantity = styled.div`
     display: flex;
     justify-content: space-between;
@@ -104,4 +110,24 @@ export const CartEmpty = styled.div`
     text-align: center;
     margin-top: 100px;
     font-size: 1.2rem;
+`
+
+export const SideCartContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+`
+
+export const CartButton = styled.button`
+    padding: 10px 20px;
+    background-color: ${({color}) => color};
+    border: none;
+    color: #fff;
+`
+
+export const CartInput = styled.input`
+    width: 31px;
+    outline: none;
 `

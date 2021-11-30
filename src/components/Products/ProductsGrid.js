@@ -1,14 +1,16 @@
 import React from 'react'
-import { GlobalContext } from '../GlobalContext'
 import Product from './Product'
-import { Grid } from './styles'
+import { Empty, Grid } from './styles'
 
-const ProductsGrid = () => {
-    const {products, fetchProducts} = React.useContext(GlobalContext)
+const ProductsGrid = ({products}) => {
 
-    React.useEffect(() => {
-        fetchProducts()
-    }, [fetchProducts])
+    if(products.length === 0) return (
+        <Empty>
+            <div>
+                <h3>Ops! Não parece haver produtos aqui...</h3>
+            </div>
+        </Empty>
+    )
     return (
         <Grid>
             {products.map(product => (

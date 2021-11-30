@@ -20,6 +20,12 @@ export const Grid = styled.div`
     }
 `
 
+export const Empty = styled.div`
+    text-align: center;
+    color: #555;
+    margin: 10px;
+`
+
 export const Item = styled.div`
     display: flex;
     flex-direction: column;
@@ -43,11 +49,11 @@ export const AddCart = styled.button`
     max-width: 300px;
     align-self: center;
     padding: 5px 0px;
-    background-color: orange;
+    background-color: #0071DC;
     color: #fff;
     transition: background-color .5s;
     &:hover{
-        background-color: darkorange;
+        background-color: #004F9A;
     }
 `
 
