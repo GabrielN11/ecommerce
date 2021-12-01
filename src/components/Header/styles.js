@@ -1,4 +1,26 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const show = keyframes`
+    from{
+        opacity: 0;
+        transform: translateX(-500px);
+    }
+    to{
+        opacity: 1;
+        transform: initial;
+    }
+`
+
+const hide = keyframes`
+    from{
+        opacity: 1;
+        transform: initial;
+    }
+    to{
+        opacity: 0;
+        transform: translateX(-500px);
+    }
+`
 
 export const HeaderStyle = styled.header`
     position: ${({ scrolled }) => scrolled ? 'fixed' : 'static'};
@@ -38,6 +60,10 @@ export const BottomHeader = styled.nav`
         &:hover{
             border-bottom: 2px solid #fff;
         }
+        
+    }
+    @media(max-width: 600px){
+        display: none;
     }
 `
 
@@ -51,5 +77,64 @@ export const Logo = styled.h1`
         color: #ffffff;
         text-decoration: none;
 
+    }
+`
+
+export const SubMenu = styled.div`
+    position: relative;
+    cursor: pointer;
+    color: #fff;
+    border-color: #fff;
+    padding: 5px 10px;
+    margin-right: 5px;
+    height: 100%;
+    text-decoration: none;
+    transition: border-bottom .05s;
+    & div{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+        display: flex;
+        flex-direction: column;
+        transform: translateX(-30%);
+        & a{
+            width: 100%;
+            padding: 10px 20px;
+            border-bottom: 1px solid #cdcdcd;
+            color: #444;
+            text-decoration: none;
+            transition: all .4s;
+            &:hover{
+                border-bottom: 1px solid #444;
+                color: #444;
+            }
+        }
+    }
+`
+
+export const SideMenuStyle = styled.nav`
+    background-color: #fff;
+    box-shadow: 3px -1px 9px -1px rgba(0,0,0,0.76);
+    position: fixed;
+    height: 100vh;
+    width: 75%;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    animation-name: ${({closeAnim}) => closeAnim ? hide : show};
+    animation-duration: .5s;
+    animation-direction: forwards;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    & a{
+        width: 100%;
+        padding: 20px 10px;
+        border-bottom: 1px solid #cdcdcd;
+        color: #444;
+        text-decoration: none;
     }
 `

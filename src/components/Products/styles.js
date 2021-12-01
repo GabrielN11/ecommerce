@@ -35,6 +35,9 @@ export const Item = styled.div`
     border-radius: 5px;
     height: 300px;
     padding: 10px;
+    @media(max-width: 750px){
+        align-items: center;
+    }
 `
 
 export const ItemImg = styled.img`
@@ -59,9 +62,9 @@ export const AddCart = styled.button`
 
 export const ProductButton = styled.button`
     border: none;
-    margin-top: 15px;
-    width: 50%;
-    padding: 15px 20px;
+    margin: 15px 0px;
+    width: 175px;
+    padding: 10px 20px;
     background-color: #0071DC;
     color: #fff;
     transition: background-color .5s;
@@ -89,6 +92,10 @@ export const ProductMainWindow = styled.div`
     min-height: calc(100vh - 310px);
     background-color: #fff;
     border-radius: 5px;
+    @media(max-width: 750px){
+        flex-direction: column;
+        align-items: center;
+    }
 `
 
 export const ImageContainer = styled.div`
@@ -99,6 +106,9 @@ export const ImageContainer = styled.div`
     padding: 0px 50px;
     width: 65%;
     height: 100%;
+    @media(max-width: 750px){
+        width: 100%;
+    }
 `
 
 export const ProductInfoContainer = styled.div`
@@ -108,6 +118,10 @@ export const ProductInfoContainer = styled.div`
     height: 100%;
     width: 35%;
     padding: 0px 50px;
+    @media(max-width: 750px){
+        width: 100%;
+        align-items: center;
+    }
 `
 
 export const ProductImg = styled.img`
@@ -117,15 +131,19 @@ export const ProductImg = styled.img`
 `
 
 export const ProductTitle = styled.h1`
-    margin: 5px;
+    margin: 3px;
 `
 
 export const ProductPrice = styled.h2`
-    margin: 5px;
+    margin: 3px;
+    margin-bottom: 10px;
     color: #0071DC;
 `
 
 export const ProductDescription = styled.div`
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 1.1rem;
+    & p{
+        margin: 0;
+    }
 `

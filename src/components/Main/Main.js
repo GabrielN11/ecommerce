@@ -1,13 +1,11 @@
 import React from 'react'
 import { MainStyle } from './styles'
-import { useMediaQuery } from 'react-responsive'
 import ProductsGrid from '../Products/ProductsGrid'
 import { Routes, Route } from 'react-router'
 import { GlobalContext } from '../GlobalContext'
 import Product from '../Products/Product'
 
 const Main = ({children}) => {
-    const mediaQuery = useMediaQuery({query: '(max-width: 800px)'})
     const {products, fetchProducts, categories} = React.useContext(GlobalContext)
 
     React.useEffect(() => {
@@ -15,7 +13,7 @@ const Main = ({children}) => {
     }, [fetchProducts])
 
     return (
-        <MainStyle mediaQuery={mediaQuery}>
+        <MainStyle>
             <Routes>
                 <Route path='/' element={<ProductsGrid products={products}/>} />
                 {categories.map(category => {

@@ -30,7 +30,7 @@ const CartItem = ({item}) => {
                     return handleUpdateCart(item.id, qtd)
                 }
                 setQuantity(item.quantity)
-                return displayAlert(`O estoque máximo atual é de ${products[i].inventory.available} itens.`, 'danger', 4000)
+                return displayAlert(`O estoque máximo atual é de ${products[i].inventory.available} itens.`, 'warning', 4000)
             }
 
         }

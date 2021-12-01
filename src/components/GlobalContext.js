@@ -61,8 +61,6 @@ export const GlobalProvider = ({ children }) => {
         setCart(cart)
     }, [])
 
-    console.log(products)
-
     return (
         <GlobalContext.Provider value={{
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,

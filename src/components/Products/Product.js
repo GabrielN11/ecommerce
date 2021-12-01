@@ -1,9 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import SvgArrow from '../../assets/SvgArrow'
-import { CartButton, CartInput, CartQuantity } from '../Cart/styles'
+import { CartInput, CartQuantity } from '../Cart/styles'
 import { GlobalContext } from '../GlobalContext'
-import { ProductImg, ImageContainer, ProductMainWindow, ProductInfoContainer, ProductTitle, ProductPrice, ProductDescription, AddCart, ProductButton } from './styles'
+import { ProductImg, ImageContainer, ProductMainWindow, ProductInfoContainer, ProductTitle, ProductPrice, ProductDescription, ProductButton } from './styles'
 
 const Product = () => {
 
@@ -47,7 +47,7 @@ const Product = () => {
         if(quantity === '') setQuantity(1)
         if(quantity > product.inventory.available){
             setQuantity(1)
-            displayAlert(`Há ${product.inventory.available} produtos disponíveis no momento.`, 'danger')
+            displayAlert(`Há somente ${product.inventory.available} produtos disponíveis no momento.`, 'warning')
         }
         input.current.blur()
     }
@@ -65,7 +65,7 @@ const Product = () => {
                 <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
                 <ProductDescription id='desc'></ProductDescription>
                 <ProductDescription style={{color: '#555'}}>Disponíveis: {product.inventory.available}</ProductDescription>
-                <CartQuantity style={{width: '50%'}}>
+                <CartQuantity style={{width: '175px'}}>
                     <div style={{padding: '5px 0'}} onClick={() => {
                         if(quantity - 1 < 1) return
                         setQuantity(quantity - 1)
@@ -86,7 +86,7 @@ const Product = () => {
                         </form>
                     }
                     <div style={{padding: '5px 0'}} onClick={() => {
-                        if(quantity + 1 > product.inventory.available) return
+                        if(quantity + 1 > product.inventory.available) return displayAlert(`Há somente ${product.inventory.available} produtos disponíveis no momento.`, 'warning')
                         setQuantity(quantity + 1)
                     }}>+</div>
                 </CartQuantity>
