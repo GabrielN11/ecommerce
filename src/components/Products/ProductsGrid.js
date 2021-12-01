@@ -1,5 +1,5 @@
 import React from 'react'
-import Product from './Product'
+import ProductItem from './ProductItem'
 import { Empty, Grid } from './styles'
 
 const ProductsGrid = ({products}) => {
@@ -14,7 +14,7 @@ const ProductsGrid = ({products}) => {
     return (
         <Grid>
             {products.map(product => (
-                <Product key={product.id} product={product}/>
+                <ProductItem key={product.id} product={product}/>
             ))}
         </Grid>
     )

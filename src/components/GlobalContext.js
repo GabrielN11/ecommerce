@@ -53,6 +53,7 @@ export const GlobalProvider = ({ children }) => {
         const { data } = await commerce.products.list()
         setProducts(data)
         setLoading(false)
+        return data
     }, [])
 
     const fetchCart = React.useCallback(async () => {
@@ -60,7 +61,6 @@ export const GlobalProvider = ({ children }) => {
         setCart(cart)
     }, [])
 
-    console.log(categories)
     console.log(products)
 
     return (

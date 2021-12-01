@@ -3,6 +3,7 @@ import { WarningBox, Warning, WarningBar } from './styles'
 
 const Alert = ({alert}) => {
 
+    if(alert.items.length === 0) return null
     return (
         <WarningBox>
             {alert.items.map(item => (

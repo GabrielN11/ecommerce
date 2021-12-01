@@ -45,6 +45,7 @@ export const Logo = styled.h1`
     text-decoration: none;
     font-family: monospace;
     margin-right: auto;
+    margin-bottom: 0;
     font-weight: normal;
     & a{
         color: #ffffff;

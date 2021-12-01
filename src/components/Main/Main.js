@@ -4,6 +4,7 @@ import { useMediaQuery } from 'react-responsive'
 import ProductsGrid from '../Products/ProductsGrid'
 import { Routes, Route } from 'react-router'
 import { GlobalContext } from '../GlobalContext'
+import Product from '../Products/Product'
 
 const Main = ({children}) => {
     const mediaQuery = useMediaQuery({query: '(max-width: 800px)'})
@@ -21,6 +22,7 @@ const Main = ({children}) => {
                     const categProducts = products.filter(product => product.categories[0].name === category.name)
                     return <Route key={category.id} path={`/${category.slug}`} element={<ProductsGrid products={categProducts}/>}/>
                 })}
+                <Route path='/product/:id' element={<Product/>}/>
             </Routes>
             {children}
         </MainStyle>

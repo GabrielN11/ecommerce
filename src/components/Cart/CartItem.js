@@ -1,6 +1,6 @@
 import React from 'react'
 import { CartContent, CartInfo, CartQuantity, CartInput } from './styles'
-import { ProdTitle, ProdPrice } from '../Products/styles'
+import { ItemTitle, ItemPrice } from '../Products/styles'
 import { GlobalContext } from '../GlobalContext'
 import SvgTrash from '../../assets/SvgTrash'
 import SideLoading from '../Loading/SideLoading'
@@ -14,6 +14,11 @@ const CartItem = ({item}) => {
     function handleSubmit(e) {
         e.preventDefault()
         input.current.blur()
+        if(quantity === ''){
+            setQuantity(item.quantity)
+            return handleUpdate(item.quantity)
+
+        }
         handleUpdate(quantity)
     }
 
@@ -42,12 +47,12 @@ const CartItem = ({item}) => {
         <CartContent>
             <img src={item.image.url} alt={item.name}/>
             <CartInfo>
-                <ProdTitle>{item.name}</ProdTitle>
-                <ProdPrice>{item.price.formatted_with_symbol}</ProdPrice>
+                <ItemTitle>{item.name}</ItemTitle>
+                <ItemPrice>{item.price.formatted_with_symbol}</ItemPrice>
             </CartInfo>
             <CartInfo style={{marginLeft: 'auto'}}>
-                <ProdTitle>Subtotal:</ProdTitle>
-                <ProdPrice>{item.line_total.formatted_with_symbol}</ProdPrice>
+                <ItemTitle>Subtotal:</ItemTitle>
+                <ItemPrice>{item.line_total.formatted_with_symbol}</ItemPrice>
                 <CartQuantity>
                     <div onClick={() => handleUpdateCart(item.id, item.quantity - 1)}>-</div>
                     {showForm ? <form onSubmit={handleSubmit}>
