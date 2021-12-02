@@ -14,7 +14,7 @@ const SearchBar = ({setBar, color, mobile, handleToggle}) => {
 
     function handleSubmit(e){
         e.preventDefault()
-        handleToggle()
+        if(handleToggle) handleToggle()
         navigate(`/?q=${search.toLowerCase()}`)
     }
     return (
