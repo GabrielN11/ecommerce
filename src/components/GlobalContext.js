@@ -11,6 +11,8 @@ export const GlobalProvider = ({ children }) => {
     const [loading, setLoading] = React.useState(false)
     const [sideLoading, setSideLoading] = React.useState(false)
     const [sideCart, setSideCart] = React.useState(false)
+    const [order, setOrder] = React.useState({})
+
 
     const {alert, displayAlert} = useAlert()
 
@@ -48,6 +50,21 @@ export const GlobalProvider = ({ children }) => {
         displayAlert('O carrinho foi esvaziado.', '', 3000)
     }
 
+    const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+        try{
+            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder)
+            setOrder(incomingOrder)
+            refreshCart()
+        }catch(error){
+            displayAlert(error.data.error.message, 'danger', 10000)
+        }
+    }
+
+    const refreshCart = async () => {
+        const newCart = await commerce.cart.refresh()
+        setCart(newCart)
+    }
+
     const fetchProducts = React.useCallback(async () => {
         setLoading(true)
         const { data } = await commerce.products.list()
@@ -65,7 +82,7 @@ export const GlobalProvider = ({ children }) => {
         <GlobalContext.Provider value={{
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
-            removeFromCart, emptyCart, setSideLoading, sideLoading
+            removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order
         }}>
             {children}
         </GlobalContext.Provider>

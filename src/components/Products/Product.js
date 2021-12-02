@@ -23,7 +23,8 @@ const Product = () => {
                 if(item.permalink === id) {
                     setProduct(item)
                     setImages(item.assets)
-                    document.querySelector('#desc').innerHTML = item.description
+                    const desc = document.querySelector('#desc')
+                    if(desc) desc.innerHTML = item.description
                 }
             })
         }
@@ -44,7 +45,7 @@ const Product = () => {
 
     function handleSubmit(e){
         e.preventDefault()
-        if(quantity === '') setQuantity(1)
+        if(quantity === '' || quantity < 1) setQuantity(1)
         if(quantity > product.inventory.available){
             setQuantity(1)
             displayAlert(`Há somente ${product.inventory.available} produtos disponíveis no momento.`, 'warning')

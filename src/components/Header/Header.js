@@ -3,6 +3,7 @@ import { HeaderStyle, TopHeader, BottomHeader, Logo, SubMenu } from './styles'
 import { SideCart } from '..'
 import { SvgCart, SvgX } from '../../assets'
 import { GlobalContext } from '../GlobalContext'
+import { useLocation } from 'react-router'
 import { Link, NavLink } from 'react-router-dom'
 import SvgToggle from '../../assets/SvgToggle'
 import SideMenu from './SideMenu'
@@ -17,6 +18,7 @@ const Header = () => {
     const [subMenu, setSubMenu] = React.useState(false)
     const [bar, setBar] = React.useState(false)
     const {cart, sideCart, setSideCart, categories} = React.useContext(GlobalContext)
+    const location = useLocation()
     const handleScroll = React.useCallback(() => {
         if (window.scrollY > 120)
             return setScrolled(true)
@@ -47,7 +49,7 @@ const Header = () => {
                 <Logo><Link to='/'>E-Commerce</Link></Logo>
                 {!bar && <SvgSearch onClick={() => setBar(true)}/>}
                 {bar && <SearchBar setBar={setBar} color='#fff'/>}
-                <SvgCart counter={cart.total_items} onClick={() => setSideCart(!sideCart)}/>
+                {location.pathname !== '/checkout' && <SvgCart counter={cart.total_items} onClick={() => setSideCart(!sideCart)}/>}
                 <SvgToggle onClick={handleToggle}/>
                 {scrolled && <div
                     onClick={() => {

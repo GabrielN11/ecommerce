@@ -121,7 +121,7 @@ export const SideCartContainer = styled.div`
 `
 
 export const CartButton = styled.button`
-    padding: 10px 20px;
+    padding: ${({size}) => `${size/2}px ${size}px`};
     background-color: ${({color}) => color};
     border: none;
     color: #fff;

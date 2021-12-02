@@ -3,6 +3,7 @@ import { CartButton, CartEmpty, CartTitle, SideCartContainer, SideCartHeader, Si
 import SvgX from '../../assets/SvgX'
 import CartItem from './CartItem'
 import { GlobalContext } from '../GlobalContext'
+import { Link } from 'react-router-dom'
 
 const SideCart = ({ setSideCart, cart }) => {
     const [closeAnim, setCloseAnim] = React.useState(false)
@@ -31,8 +32,8 @@ const SideCart = ({ setSideCart, cart }) => {
                     <TotalPrice>{cart.subtotal.formatted_with_symbol}</TotalPrice>
                 </SideCartContainer>
                 <SideCartContainer>
-                    <CartButton color='#6c757d' onClick={emptyCart}>Esvaziar Carrinho</CartButton>
-                    <CartButton color='#0071DC'>Finalizar a Compra</CartButton>
+                    <CartButton color='#6c757d' size={20} onClick={emptyCart}>Esvaziar Carrinho</CartButton>
+                    <Link to='/checkout'><CartButton color='#0071DC' size={20} onClick={handleClose}>Finalizar a Compra</CartButton></Link>
                 </SideCartContainer>
 
             </>}

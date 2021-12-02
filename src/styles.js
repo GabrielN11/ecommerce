@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Root = styled.div`
+    background-color: #f8f9fa;
     display: grid;
     max-width: 100vw;
     height: 100vh;

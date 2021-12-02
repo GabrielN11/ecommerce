@@ -4,6 +4,7 @@ import ProductsGrid from '../Products/ProductsGrid'
 import { Routes, Route } from 'react-router'
 import { GlobalContext } from '../GlobalContext'
 import Product from '../Products/Product'
+import { Checkout } from '..'
 
 const Main = ({children}) => {
     const {products, fetchProducts, categories} = React.useContext(GlobalContext)
@@ -21,6 +22,7 @@ const Main = ({children}) => {
                     return <Route key={category.id} path={`/${category.slug}`} element={<ProductsGrid products={categProducts}/>}/>
                 })}
                 <Route path='/product/:id' element={<Product/>}/>
+                <Route path='/checkout' element={<Checkout/>}/>
             </Routes>
             {children}
         </MainStyle>
