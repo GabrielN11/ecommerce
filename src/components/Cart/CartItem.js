@@ -26,7 +26,7 @@ const CartItem = ({item}) => {
         for(let i in products){
             if(products[i].id === item.product_id){
                 if(qtd <= products[i].inventory.available){
-                    setQuantity(qtd) //atualiza o estado para a nova quantidade de itens
+                    setQuantity(qtd)
                     return handleUpdateCart(item.id, qtd)
                 }
                 setQuantity(item.quantity)

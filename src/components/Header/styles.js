@@ -22,6 +22,15 @@ const hide = keyframes`
     }
 `
 
+const grow = keyframes`
+    from{
+        width: 0;
+    }
+    to{
+        width: 90%;
+    }
+`
+
 export const HeaderStyle = styled.header`
     position: ${({ scrolled }) => scrolled ? 'fixed' : 'static'};
     width: ${({ scrolled }) => scrolled ? '90vw' : '100%'};
@@ -137,4 +146,31 @@ export const SideMenuStyle = styled.nav`
         color: #444;
         text-decoration: none;
     }
+`
+
+export const SearchForm = styled.form`
+    display: flex;
+    justify-content: flex-end;
+    width: ${({mobile}) => mobile ? '100%' : 'initial'};
+    padding: 0 8px; 
+`
+
+export const SearchInput = styled.input`
+    background: none;
+    outline: none;
+    border: none;
+    border-bottom: ${({mobile}) => mobile ? 'none' : `1px solid #fff`};
+    color: ${({color}) => color};
+    padding: 0;
+    font-size: 1rem;
+    animation: ${grow} .3s forwards;
+`
+
+export const SearchButton = styled.button`
+    background: none;
+    border: none;
+    padding: 0;
+    width: 10%;
+    text-align: end;
+    transform: translateY(2px);
 `
