@@ -12,6 +12,7 @@ export const GlobalProvider = ({ children }) => {
     const [sideLoading, setSideLoading] = React.useState(false)
     const [sideCart, setSideCart] = React.useState(false)
     const [order, setOrder] = React.useState({})
+    const [error, setError] = React.useState(null)
 
 
     const {alert, displayAlert} = useAlert()
@@ -57,6 +58,7 @@ export const GlobalProvider = ({ children }) => {
             refreshCart()
         }catch(error){
             displayAlert(error.data.error.message, 'danger', 10000)
+            setError(error)
         }
     }
 
@@ -82,7 +84,7 @@ export const GlobalProvider = ({ children }) => {
         <GlobalContext.Provider value={{
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
-            removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order
+            removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order, error, refreshCart
         }}>
             {children}
         </GlobalContext.Provider>

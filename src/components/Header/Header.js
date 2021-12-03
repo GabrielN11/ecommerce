@@ -1,6 +1,6 @@
 import React from 'react'
 import { HeaderStyle, TopHeader, BottomHeader, Logo, SubMenu } from './styles'
-import { SideCart } from '..'
+import { Cart } from '..'
 import { SvgCart, SvgX } from '../../assets'
 import { GlobalContext } from '../GlobalContext'
 import { useLocation } from 'react-router'
@@ -72,7 +72,7 @@ const Header = () => {
             </SubMenu>}
             </BottomHeader>
             {sideMenu && <SideMenu closeAnim={closeAnim} handleToggle={handleToggle} categories={categories}/>}
-            {sideCart && <SideCart setSideCart={setSideCart} cart={cart}/>}
+            {sideCart && <Cart setSideCart={setSideCart} cart={cart}/>}
         </HeaderStyle>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router'
+import { Head } from '..'
 import SvgArrow from '../../assets/SvgArrow'
 import { CartInput, CartQuantity } from '../Cart/styles'
 import { GlobalContext } from '../GlobalContext'
@@ -56,6 +57,7 @@ const Product = () => {
     return (
         <ProductMainWindow>
             {product && <>
+                <Head title={product.name} description={`Compre ${product.name} por preços baixos na loja E-commerce`}/>
                 <ImageContainer>
                 {product.assets.length > 1 && <SvgArrow size={30} onClick={prevImage}/>}
                 {product && images && <ProductImg src={images[index].url}/>} 

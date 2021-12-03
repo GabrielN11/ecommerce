@@ -87,6 +87,9 @@ export const Logo = styled.h1`
         text-decoration: none;
 
     }
+    @media(max-width: 600px){
+        font-size: 1rem;
+    }
 `
 
 export const SubMenu = styled.div`

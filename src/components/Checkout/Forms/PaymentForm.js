@@ -7,10 +7,10 @@ import { GlobalContext } from '../../GlobalContext'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
-const PaymentForm = ({checkoutToken, setActiveStep, shippingData}) => {
+const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     const {handleCaptureCheckout} = React.useContext(GlobalContext)
-
+    
     async function handleSubmit(e, elements, stripe){
         e.preventDefault()
         if(!stripe || !elements) return
@@ -35,7 +35,7 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData}) => {
                 },
               };
 
-            handleCaptureCheckout(checkoutToken.id, orderData)
+            timeout ? timeout() : handleCaptureCheckout(checkoutToken.id, orderData)
             setActiveStep(active => active + 1)
         }
     }

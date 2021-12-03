@@ -89,7 +89,7 @@ export const ItemPrice = styled.h4`
 export const ProductMainWindow = styled.div`
     display: flex;
     width: 100%;
-    min-height: calc(100vh - 310px);
+    min-height: calc(100vh - 220px);
     background-color: #fff;
     border-radius: 5px;
     @media(max-width: 750px){

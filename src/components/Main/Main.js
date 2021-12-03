@@ -19,7 +19,7 @@ const Main = ({children}) => {
                 <Route path='/' element={<ProductsGrid products={products}/>} />
                 {categories.map(category => {
                     const categProducts = products.filter(product => product.categories[0].name === category.name)
-                    return <Route key={category.id} path={`/${category.slug}`} element={<ProductsGrid products={categProducts}/>}/>
+                    return <Route key={category.id} path={`/${category.slug}`} element={<ProductsGrid products={categProducts} category={category.name}/>}/>
                 })}
                 <Route path='/product/:id' element={<Product/>}/>
                 <Route path='/checkout' element={<Checkout/>}/>

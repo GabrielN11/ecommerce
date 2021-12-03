@@ -5,6 +5,12 @@ const InputText = ({ name, id, label = 'Digite o campo', type = 'text', placehol
 
     const [empty, setEmpty] = React.useState(false)
 
+    React.useState(() => {
+        return () => {
+            setText('')
+        }
+    }, [])
+
     function handleChange({ target }) {
         if (required) {
             if (target.value.length > 0) setEmpty(false)

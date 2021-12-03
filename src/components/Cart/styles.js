@@ -28,7 +28,7 @@ export const CartMain = styled.div`
     border: 1px solid #cdcdcd;
 `
 
-export const SideCartWindow = styled.div`
+export const CartWindow = styled.div`
     position: fixed;
     overflow-y: auto;
     height: 100vh;
@@ -92,7 +92,7 @@ export const CartQuantity = styled.div`
     }   
 `
 
-export const SideCartHeader = styled.div`
+export const CartHeader = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px 0px;
@@ -112,7 +112,7 @@ export const CartEmpty = styled.div`
     font-size: 1.2rem;
 `
 
-export const SideCartContainer = styled.div`
+export const CartContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
