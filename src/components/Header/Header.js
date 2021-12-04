@@ -43,6 +43,8 @@ const Header = () => {
         }, 500)
     }
 
+    console.log(categories)
+
     return (
         <HeaderStyle scrolled={scrolled}>
             <TopHeader>
@@ -60,13 +62,13 @@ const Header = () => {
             <BottomHeader scrolled={scrolled}>
             <NavLink to='/'>Home</NavLink>
                 {categories.slice(0, 4).map(category => 
-                    category.products > 0 && <NavLink key={category.id} to={`/${category.slug}`}>{category.name}</NavLink>
+                    <NavLink key={category.id} to={`/${category.slug}`}>{category.name}</NavLink>
                 )}
-            {categories.length > 5 && <SubMenu onMouseEnter={() => setSubMenu(true)} onMouseLeave={() => setSubMenu(false)} onClick={() => setSubMenu(!subMenu)}>
+            {categories.length >= 5 && <SubMenu onMouseEnter={() => setSubMenu(true)} onMouseLeave={() => setSubMenu(false)} onClick={() => setSubMenu(!subMenu)}>
                 Mais
                 {subMenu && <div>
                     {categories.slice(4).map(category => 
-                        category.products > 0 && <NavLink to={`/${category.slug}`}>{category.name}</NavLink> 
+                        <NavLink key={category.id} to={`/${category.slug}`}>{category.name}</NavLink> 
                     )}
                 </div>}
             </SubMenu>}

@@ -19,7 +19,8 @@ export const GlobalProvider = ({ children }) => {
 
     const getCategories = React.useCallback(async () => {
         const {data} = await commerce.categories.list()
-        setCategories(data)
+        const categs = data.filter(item => item.products > 0)
+        setCategories(categs)
     }, [])
 
     const handleAddToCart = React.useCallback(async (productId, quantity, name) => {
