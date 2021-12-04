@@ -22,7 +22,7 @@ export const LoadingDiv = styled.div`
 
 export const SideLoadingDiv = styled.div`
     position: fixed;
-    bottom: 50px;
+    bottom: 110px;
     right: 25px;
 `
 

@@ -20,7 +20,16 @@ export const GlobalProvider = ({ children }) => {
     const getCategories = React.useCallback(async () => {
         const {data} = await commerce.categories.list()
         const categs = data.filter(item => item.products > 0)
-        setCategories(categs)
+        const finalCategs = []
+        categs.reduce((prev, item) => {
+            if(item.products >= prev){
+                finalCategs.unshift(item)
+                return item.products
+            }
+            finalCategs.push(item)
+            return item.products
+        }, 0) //Rearranges the array so that categories with more items are shown first 
+        setCategories(finalCategs)
     }, [])
 
     const handleAddToCart = React.useCallback(async (productId, quantity, name) => {

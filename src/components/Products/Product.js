@@ -4,6 +4,7 @@ import { Head } from '..'
 import SvgArrow from '../../assets/SvgArrow'
 import { CartInput, CartQuantity } from '../Cart/styles'
 import { GlobalContext } from '../GlobalContext'
+import SideLoading from '../Loading/SideLoading'
 import { ProductImg, ImageContainer, ProductMainWindow, ProductInfoContainer, ProductTitle, ProductPrice, ProductDescription, ProductButton } from './styles'
 
 const Product = () => {
@@ -13,7 +14,7 @@ const Product = () => {
     const [images, setImages] = React.useState(null)
     const [showForm, setShowForm] = React.useState(false)
     const [quantity, setQuantity] = React.useState(1)
-    const {fetchProducts, displayAlert, handleAddToCart} = React.useContext(GlobalContext)
+    const {fetchProducts, displayAlert, handleAddToCart, setSideLoading, sideLoading} = React.useContext(GlobalContext)
     const {id} = useParams()
     const input = React.useRef()
 
@@ -34,10 +35,12 @@ const Product = () => {
     }, [fetchProducts, id])
 
     function nextImage(){
+        setSideLoading(true)
         setIndex((index + 1) % images.length)
     }
 
     function prevImage(){
+        setSideLoading(true)
         if(index > 0)
         setIndex(index - 1)
         else
@@ -60,7 +63,7 @@ const Product = () => {
                 <Head title={product.name} description={`Compre ${product.name} por preços baixos na loja E-commerce`}/>
                 <ImageContainer>
                 {product.assets.length > 1 && <SvgArrow size={30} onClick={prevImage}/>}
-                {product && images && <ProductImg src={images[index].url}/>} 
+                {product && images && <ProductImg src={images[index].url} onLoad={() => setSideLoading(false)}/>} 
                 {product.assets.length > 1 && <SvgArrow reverse size={30} onClick={nextImage}/>}
             </ImageContainer>
             {product && <ProductInfoContainer direction='column'>
@@ -96,6 +99,7 @@ const Product = () => {
                 <ProductButton onClick={() => handleAddToCart(product.id, quantity, product.name)}>Adicionar ao Carrinho</ProductButton>
             </ProductInfoContainer>}
             </>}
+            {sideLoading && <SideLoading/>}
         </ProductMainWindow>
     )
 }

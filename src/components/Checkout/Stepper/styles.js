@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StepperDiv = styled.div`
+    font-size: 0.9rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
