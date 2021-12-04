@@ -6,7 +6,7 @@ import { Empty, Grid } from './styles'
 
 const ProductsGrid = ({ products, category }) => {
 
-    const [filterProducts, setFilterProducts] = React.useState([])
+    const [filterProducts, setFilterProducts] = React.useState({status: false, content: []})
     const location = useLocation()
 
     React.useEffect(() => {
@@ -17,11 +17,11 @@ const ProductsGrid = ({ products, category }) => {
                     product.description.toLowerCase().includes(search) ||
                     product.categories[0].name.toLowerCase().includes(search)
             })
-            setFilterProducts(result)
+            setFilterProducts({status: true, content: result})
         }
 
         return () => {
-            setFilterProducts([])
+            setFilterProducts({status: false, content: []})
         }
     }, [location, products])
 
@@ -34,7 +34,7 @@ const ProductsGrid = ({ products, category }) => {
     )
     return (
         <Grid>
-            {filterProducts.length === 0 && products.map(product => (
+            {!filterProducts.status && products.map(product => (
                 <React.Fragment key={product.id}>
                     <Head description={!category ? 'Loja de produtos variados, entregamos produtos em todo o Brasil.' :
                      `Compre ${category} pelos menores preços, entregas em todo Brasil.`}
@@ -42,12 +42,12 @@ const ProductsGrid = ({ products, category }) => {
                     <ProductItem product={product} />
                 </React.Fragment>
             ))}
-            {filterProducts.length > 0 && filterProducts.map(product => (
+            {filterProducts.status && (filterProducts.content.length > 0 ? filterProducts.content.map(product => (
                 <React.Fragment key={product.id}>
                     <Head description='Loja de produtos variados, entregamos produtos em todo o Brasil.' title={`Pesquisa - ${new URLSearchParams(location.search).get('q')}`}/>
                     <ProductItem key={product.id} product={product} />
                 </React.Fragment>
-            ))}
+            )) : <Empty>Não há resultados para sua pesquisa.</Empty>)}
         </Grid>
     )
 }

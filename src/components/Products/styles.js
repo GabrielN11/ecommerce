@@ -3,16 +3,16 @@ import styled from "styled-components";
 export const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 300px);
-    row-gap: 10px;
+    gap: 10px;
     justify-content: space-evenly;
     padding: 5px;
-    @media (max-width: 1200px){
+    @media (max-width: 1250px){
         grid-template-columns: repeat(3, 300px);
     }
-    @media (max-width: 900px){
+    @media (max-width: 950px){
         grid-template-columns: repeat(2, 300px);
     }
-    @media (max-width: 600px){
+    @media (max-width: 650px){
         grid-template-columns: 300px;
     }
     @media (max-width: 400px){
@@ -24,6 +24,8 @@ export const Empty = styled.div`
     text-align: center;
     color: #555;
     margin: 10px;
+    grid-column-start: 1;
+    grid-column-end: 5;
 `
 
 export const Item = styled.div`
