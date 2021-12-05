@@ -43,8 +43,6 @@ const Header = () => {
         }, 500)
     }
 
-    console.log(categories)
-
     return (
         <HeaderStyle scrolled={scrolled}>
             <TopHeader>

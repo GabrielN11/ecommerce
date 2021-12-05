@@ -16,11 +16,11 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
     const [code, setCode] = React.useState(shippingData.code || '')
 
     const [shippingCountries, setShippingCountries] = React.useState([])
-    const [shippingCountry, setShippingCountry] = React.useState(shippingData.shippingCountry || '')
+    const [shippingCountry, setShippingCountry] = React.useState(shippingData.shippingCountry || null)
     const [shippingSubdivisions, setShippingSubdivisions] = React.useState([])
-    const [shippingSubdivision, setShippingSubdivision] = React.useState(shippingData.shippingSubdivision || '')
+    const [shippingSubdivision, setShippingSubdivision] = React.useState(shippingData.shippingSubdivision || null)
     const [shippingOptions, setShippingOptions] = React.useState([])
-    const [shippingOption, setShippingOption] = React.useState(shippingData.shippingOption || '')
+    const [shippingOption, setShippingOption] = React.useState(shippingData.shippingOption || null)
 
     const transformArray = (obj) => {
         const values = Object.keys(obj)
@@ -46,7 +46,7 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
         const {subdivisions} = await commerce.services.localeListShippingSubdivisions(checkoutTokenId, shippingCountry)
         const finalArray = transformArray(subdivisions)
         setShippingSubdivisions(finalArray)
-        if(!shippingData.shippingSubdivision)
+        if(!shippingData.shippingSubdivision && finalArray.length > 0)
         setShippingSubdivision(finalArray[0].value)
     }, [shippingCountry, shippingData.shippingSubdivision])
 
@@ -87,7 +87,7 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
             setText={setEmail}/>
             <InputText label='Digite o nome de sua cidade' title='Cidade' placeholder='Ex: Santos' required text={city}
             setText={setCity}/>
-            <InputText label='Digite seu CEP' title='CEP' placeholder='Ex: 70680159' number required text={code}
+            <InputText label='Digite seu CEP / ZIP Code' title='CEP' placeholder='Ex: 70680159' number required text={code}
             setText={setCode} limit={8}/>
             <Select items={shippingCountries} value={shippingCountry} setText={setShippingCountry} required label='Selecione seu país'/>
             <Select items={shippingSubdivisions} value={shippingSubdivision} setText={setShippingSubdivision} required label='Selecione seu estado'/>

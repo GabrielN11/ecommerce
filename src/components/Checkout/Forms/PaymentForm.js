@@ -4,12 +4,26 @@ import { loadStripe } from '@stripe/stripe-js'
 import Review from '../Review'
 import { CartButton } from '../../Cart/styles'
 import { GlobalContext } from '../../GlobalContext'
+import { commerce } from '../../../lib/commerce'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
+    const [data, setData] = React.useState(checkoutToken)
     const {handleCaptureCheckout} = React.useContext(GlobalContext)
+
+    React.useEffect(() => {
+        const setFetchData = async () => {
+            const fetchData = await commerce.checkout.checkShippingOption(checkoutToken.id, {
+                shipping_option_id: shippingData.shippingOption,
+                country: shippingData.shippingCountry,
+                region: shippingData.shippingSubdivision
+            })
+            setData(fetchData)
+        }
+        setFetchData()
+    }, [checkoutToken, shippingData])
     
     async function handleSubmit(e, elements, stripe){
         e.preventDefault()
@@ -42,7 +56,7 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     return (
         <div style={{width: '100%'}}>
-            <Review checkoutToken={checkoutToken}/>
+            <Review data={data}/>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({elements, stripe}) => (
@@ -51,7 +65,7 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
                             <br/><br/>
                             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <CartButton color='#6c757d' size={30} onClick={() => setActiveStep(active => active - 1)}>Voltar</CartButton>
-                                <CartButton color='#0071DC' size={30} disabled={!stripe}>Comprar ({checkoutToken.live.subtotal.formatted_with_symbol})</CartButton>
+                                <CartButton color='#0071DC' size={30} disabled={!stripe}>Comprar ({data.live.total.formatted_with_symbol})</CartButton>
                             </div>
                         </form>
                     )}

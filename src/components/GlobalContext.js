@@ -90,11 +90,21 @@ export const GlobalProvider = ({ children }) => {
         setCart(cart)
     }, [])
 
+    const fetchShippingData = React.useCallback(async (id, option, country, region) => {
+        const data = await commerce.checkout.checkShippingOption(id, {
+            shipping_option_id: option,
+            country,
+            region
+        })
+        console.log(data)
+        return data
+    }, [])
+
     return (
         <GlobalContext.Provider value={{
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
-            removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order, error, refreshCart
+            removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order, error, refreshCart,
         }}>
             {children}
         </GlobalContext.Provider>
