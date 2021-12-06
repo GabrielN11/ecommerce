@@ -16,11 +16,11 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
     const [code, setCode] = React.useState(shippingData.code || '')
 
     const [shippingCountries, setShippingCountries] = React.useState([])
-    const [shippingCountry, setShippingCountry] = React.useState(shippingData.shippingCountry || null)
+    const [shippingCountry, setShippingCountry] = React.useState(shippingData.shippingCountry || '')
     const [shippingSubdivisions, setShippingSubdivisions] = React.useState([])
-    const [shippingSubdivision, setShippingSubdivision] = React.useState(shippingData.shippingSubdivision || null)
+    const [shippingSubdivision, setShippingSubdivision] = React.useState(shippingData.shippingSubdivision || '')
     const [shippingOptions, setShippingOptions] = React.useState([])
-    const [shippingOption, setShippingOption] = React.useState(shippingData.shippingOption || null)
+    const [shippingOption, setShippingOption] = React.useState(shippingData.shippingOption || '')
 
     const transformArray = (obj) => {
         const values = Object.keys(obj)
@@ -46,12 +46,12 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
         const {subdivisions} = await commerce.services.localeListShippingSubdivisions(checkoutTokenId, shippingCountry)
         const finalArray = transformArray(subdivisions)
         setShippingSubdivisions(finalArray)
-        if(!shippingData.shippingSubdivision && finalArray.length > 0)
+        if(!shippingData.shippingSubdivision)
         setShippingSubdivision(finalArray[0].value)
     }, [shippingCountry, shippingData.shippingSubdivision])
 
-    const fetchShippingOptions = React.useCallback(async(checkoutTokenId, country, region = null) => {
-        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, {country, region})
+    const fetchShippingOptions = React.useCallback(async(checkoutTokenId, country) => {
+        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, {country})
         const array = options.map(option => ({value: option.id, text: `${option.description} - (${option.price.formatted_with_symbol})`}))
         setShippingOptions(array)
         if(!shippingData.shippingOption)
@@ -67,7 +67,7 @@ const AddressForm = ({checkoutToken, next, shippingData}) => {
     }, [shippingCountry, fetchShippingSubdivisions, checkoutToken.id])
 
     React.useEffect(() => {
-        if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision)
+        if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry)
     }, [shippingSubdivision, shippingCountry, fetchShippingOptions, checkoutToken.id])
 
     const handleSubmit = () => {

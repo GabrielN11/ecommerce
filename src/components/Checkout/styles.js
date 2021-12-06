@@ -49,6 +49,18 @@ export const ButtonContainer = styled.div`
     justify-content: space-evenly;
 `
 
+export const ReviewDiv = styled.div`
+    border-bottom: 1px solid #cdcdcd;
+    margin-bottom: 20px;
+    & h3 span{
+        font-weight: normal;
+    }
+    & p{
+        color: #28a745;
+        font-weight: bold;
+    }
+`
+
 export const ReviewItem = styled.div`
     display: flex;
     justify-content: space-between;

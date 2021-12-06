@@ -11,7 +11,16 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     const [data, setData] = React.useState(checkoutToken)
-    const {handleCaptureCheckout} = React.useContext(GlobalContext)
+    const [discount, setDiscount] = React.useState({})
+    const {handleCaptureCheckout, discountCode} = React.useContext(GlobalContext)
+
+    React.useEffect(() => {
+        const checkDiscount = async () => {
+            const discountData = await commerce.checkout.checkDiscount(checkoutToken.id, { code: discountCode })
+            setDiscount(discountData)
+        }
+        if(discountCode.length > 0) checkDiscount()
+    }, [discountCode, checkoutToken])
 
     React.useEffect(() => {
         const setFetchData = async () => {
@@ -20,10 +29,10 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
                 country: shippingData.shippingCountry,
                 region: shippingData.shippingSubdivision
             })
-            setData(fetchData)
+            return setData(fetchData)
         }
         setFetchData()
-    }, [checkoutToken, shippingData])
+    }, [discount, checkoutToken, shippingData])
     
     async function handleSubmit(e, elements, stripe){
         e.preventDefault()
@@ -56,7 +65,7 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     return (
         <div style={{width: '100%'}}>
-            <Review data={data}/>
+            <Review data={data} discount={discount} discountCode={discountCode}/>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({elements, stripe}) => (

@@ -11,6 +11,7 @@ export const GlobalProvider = ({ children }) => {
     const [loading, setLoading] = React.useState(false)
     const [sideLoading, setSideLoading] = React.useState(false)
     const [sideCart, setSideCart] = React.useState(false)
+    const [discountCode, setDiscountCode] = React.useState('')
     const [order, setOrder] = React.useState({})
     const [error, setError] = React.useState(null)
 
@@ -90,21 +91,12 @@ export const GlobalProvider = ({ children }) => {
         setCart(cart)
     }, [])
 
-    const fetchShippingData = React.useCallback(async (id, option, country, region) => {
-        const data = await commerce.checkout.checkShippingOption(id, {
-            shipping_option_id: option,
-            country,
-            region
-        })
-        console.log(data)
-        return data
-    }, [])
-
     return (
         <GlobalContext.Provider value={{
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
             removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order, error, refreshCart,
+            discountCode, setDiscountCode
         }}>
             {children}
         </GlobalContext.Provider>

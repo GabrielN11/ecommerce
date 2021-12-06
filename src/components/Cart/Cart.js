@@ -1,5 +1,5 @@
 import React from 'react'
-import { CartButton, CartEmpty, CartTitle, CartContainer, CartHeader, CartWindow, TotalPrice } from './styles'
+import { CartButton, CartEmpty, CartTitle, CartContainer, CartHeader, CartWindow, TotalPrice, CodeInput } from './styles'
 import SvgX from '../../assets/SvgX'
 import CartItem from './CartItem'
 import { GlobalContext } from '../GlobalContext'
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const Cart = ({ setSideCart, cart }) => {
     const [closeAnim, setCloseAnim] = React.useState(false)
-    const {emptyCart} = React.useContext(GlobalContext)
+    const {emptyCart, setDiscountCode, discountCode} = React.useContext(GlobalContext)
 
     function handleClose() {
         setCloseAnim(true)
@@ -27,6 +27,10 @@ const Cart = ({ setSideCart, cart }) => {
                 <CartItem key={item.id} item={item} />
             ))}
             {cart.line_items.length > 0 && <>
+                <CartContainer>
+                    Cupom de desconto:
+                    <CodeInput type='text' placeholder='Digite o cupom aqui.' value={discountCode} onChange={({target}) => setDiscountCode(target.value.toUpperCase())}/>
+                </CartContainer>
                 <CartContainer>
                     <TotalPrice>Total:</TotalPrice>
                     <TotalPrice>{cart.subtotal.formatted_with_symbol}</TotalPrice>

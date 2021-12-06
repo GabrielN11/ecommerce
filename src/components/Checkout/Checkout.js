@@ -15,7 +15,7 @@ const Checkout = () => {
     const [activeStep, setActiveStep] = React.useState(0)
     const [shippingData, setShippingData] = React.useState({})
     const [checkoutToken, setCheckoutToken] = React.useState(null)
-    const {cart, order, error, refreshCart} = React.useContext(GlobalContext)
+    const { cart, order, error, refreshCart } = React.useContext(GlobalContext)
     const navigate = useNavigate()
 
     const test = true //const for testing in case a credit card is not provided by the owner, switch to 'true' to emulate a successful order request
@@ -28,17 +28,17 @@ const Checkout = () => {
     } : null
 
     React.useEffect(() => {
-        if(cart.total_items > 0){
+        if (cart.total_items > 0) {
             const generateToken = async () => {
-                try{
-                    const token = await commerce.checkout.generateToken(cart.id, { type: 'cart'})
+                try {
+                    const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' })
                     setCheckoutToken(token)
-                }catch(error){
-    
+                } catch (error) {
+
                 }
             }
             generateToken()
-        }else{
+        } else {
             navigate('/')
         }
         return () => {
@@ -53,14 +53,14 @@ const Checkout = () => {
     }
 
     const Form = () => activeStep === 0 ?
-        <AddressForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} next={next} shippingData={shippingData}/> :
-        <PaymentForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} shippingData={shippingData} timeout={timeout}/>
+        <AddressForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} next={next} shippingData={shippingData} /> :
+        <PaymentForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} shippingData={shippingData} timeout={timeout} />
 
     return (
         <CheckoutWindow>
-            <Head title='Checkout' description='Loja de produtos variados, entregamos produtos em todo o Brasil.'/>
-            <Stepper steps={steps} activeStep={activeStep}/>
-            {activeStep === steps.length - 1 ? <Confirmation order={order} error={error} finished={finished}/> : checkoutToken && <Form/>}
+            <Head title='Checkout' description='Loja de produtos variados, entregamos produtos em todo o Brasil.' />
+            <Stepper steps={steps} activeStep={activeStep} />
+            {activeStep === steps.length - 1 ? <Confirmation order={order} error={error} finished={finished} /> : checkoutToken && <Form />}
         </CheckoutWindow>
     )
 }

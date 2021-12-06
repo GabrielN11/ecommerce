@@ -131,3 +131,13 @@ export const CartInput = styled.input`
     width: 31px;
     outline: none;
 `
+
+export const CodeInput = styled.input`
+    border-radius: 5px;
+    border: 1px solid #cdcdcd;
+    outline: none;
+    padding: 5px 3px;
+    &:focus{
+        border: 1px solid #0071DC;
+    }
+`
