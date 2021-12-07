@@ -5,34 +5,32 @@ import Review from '../Review'
 import { CartButton } from '../../Cart/styles'
 import { GlobalContext } from '../../GlobalContext'
 import { commerce } from '../../../lib/commerce'
+import Loading from '../../Loading/Loading'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     const [data, setData] = React.useState(checkoutToken)
-    const [discount, setDiscount] = React.useState({})
+    const [loaded, setLoaded] = React.useState(false)
     const {handleCaptureCheckout, discountCode} = React.useContext(GlobalContext)
 
     React.useEffect(() => {
         const checkDiscount = async () => {
-            const discountData = await commerce.checkout.checkDiscount(checkoutToken.id, { code: discountCode })
-            setDiscount(discountData)
+            await commerce.checkout.checkDiscount(checkoutToken.id, { code: discountCode })
         }
-        if(discountCode.length > 0) checkDiscount()
-    }, [discountCode, checkoutToken])
-
-    React.useEffect(() => {
         const setFetchData = async () => {
+            if(discountCode.length > 0) await checkDiscount()
             const fetchData = await commerce.checkout.checkShippingOption(checkoutToken.id, {
                 shipping_option_id: shippingData.shippingOption,
                 country: shippingData.shippingCountry,
                 region: shippingData.shippingSubdivision
             })
+            setLoaded(true)
             return setData(fetchData)
         }
         setFetchData()
-    }, [discount, checkoutToken, shippingData])
+    }, [discountCode, checkoutToken, shippingData])
     
     async function handleSubmit(e, elements, stripe){
         e.preventDefault()
@@ -64,8 +62,9 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
     }
 
     return (
-        <div style={{width: '100%'}}>
-            <Review data={data} discount={discount} discountCode={discountCode}/>
+        <>
+        {loaded ? <div style={{width: '100%'}}>
+            <Review data={data} discountCode={discountCode}/>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({elements, stripe}) => (
@@ -80,7 +79,8 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
                     )}
                 </ElementsConsumer>
             </Elements>
-        </div>
+        </div> : <Loading loading={true}/>}
+        </>
     )
 }
 

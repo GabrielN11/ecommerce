@@ -18,6 +18,10 @@ export const GlobalProvider = ({ children }) => {
 
     const {alert, displayAlert} = useAlert()
 
+    const changeLoading = React.useCallback((status) => {
+        setLoading(status)
+    }, [])
+
     const getCategories = React.useCallback(async () => {
         const {data} = await commerce.categories.list()
         const categs = data.filter(item => item.products > 0)
@@ -96,7 +100,7 @@ export const GlobalProvider = ({ children }) => {
             getCategories, categories, cart, setCart, products, setProducts, handleAddToCart, fetchCart, fetchProducts,
             loading, setLoading, alert, displayAlert, sideCart, setSideCart, handleUpdateCart,
             removeFromCart, emptyCart, setSideLoading, sideLoading, handleCaptureCheckout, order, error, refreshCart,
-            discountCode, setDiscountCode
+            discountCode, setDiscountCode, changeLoading
         }}>
             {children}
         </GlobalContext.Provider>

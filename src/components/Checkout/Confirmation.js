@@ -5,9 +5,7 @@ import { Spin } from '../Loading/styles'
 import { ItemTitle} from '../Products/styles'
 
 const Confirmation = ({order, error, finished /*finished is a test state only*/}) => {
-
-    console.log(finished)
-
+    
     if(!order.customer && !finished) return (
         <div style={{margin: 'auto 0'}}>
             <Spin size={50}/>

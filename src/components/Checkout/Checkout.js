@@ -15,7 +15,7 @@ const Checkout = () => {
     const [activeStep, setActiveStep] = React.useState(0)
     const [shippingData, setShippingData] = React.useState({})
     const [checkoutToken, setCheckoutToken] = React.useState(null)
-    const { cart, order, error, refreshCart } = React.useContext(GlobalContext)
+    const { cart, order, error, refreshCart, setLoading } = React.useContext(GlobalContext)
     const navigate = useNavigate()
 
     const test = true //const for testing in case a credit card is not provided by the owner, switch to 'true' to emulate a successful order request
@@ -29,12 +29,15 @@ const Checkout = () => {
 
     React.useEffect(() => {
         if (cart.total_items > 0) {
+            setLoading(true)
             const generateToken = async () => {
                 try {
                     const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' })
                     setCheckoutToken(token)
                 } catch (error) {
 
+                }finally{
+                    setLoading(false)
                 }
             }
             generateToken()

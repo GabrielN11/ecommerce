@@ -14,6 +14,7 @@ const Product = () => {
     const [images, setImages] = React.useState(null)
     const [showForm, setShowForm] = React.useState(false)
     const [quantity, setQuantity] = React.useState(1)
+    const [price, setPrice] = React.useState('')
     const {fetchProducts, displayAlert, handleAddToCart, setSideLoading, sideLoading} = React.useContext(GlobalContext)
     const {id} = useParams()
     const input = React.useRef()
@@ -24,6 +25,7 @@ const Product = () => {
             prods.forEach(item => {
                 if(item.permalink === id) {
                     setProduct(item)
+                    setPrice(item.price.formatted_with_symbol)
                     setImages(item.assets)
                     const desc = document.querySelector('#desc')
                     if(desc) desc.innerHTML = item.description
@@ -33,6 +35,16 @@ const Product = () => {
         fetchProduct()
 
     }, [fetchProducts, id])
+
+    React.useEffect(() => {
+        if(product){
+            const newRawPrice = product.price.raw * quantity
+            const newPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+                .format(newRawPrice)
+                .replace(/\s+/g, '')
+            setPrice(newPrice)
+        }
+    }, [quantity, product])
 
     function nextImage(){
         setSideLoading(true)
@@ -68,7 +80,7 @@ const Product = () => {
             </ImageContainer>
             {product && <ProductInfoContainer direction='column'>
                 <ProductTitle>{product.name}</ProductTitle>
-                <ProductPrice>{product.price.formatted_with_symbol}</ProductPrice>
+                <ProductPrice>{price}</ProductPrice>
                 <ProductDescription id='desc'></ProductDescription>
                 <ProductDescription style={{color: '#555'}}>Disponíveis: {product.inventory.available}</ProductDescription>
                 <CartQuantity style={{width: '175px'}}>
