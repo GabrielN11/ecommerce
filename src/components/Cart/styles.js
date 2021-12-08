@@ -43,7 +43,7 @@ export const CartWindow = styled.div`
     animation-name: ${({closeAnim, mobile}) => mobile ? 'none' : closeAnim ? hide : show};
     animation-duration: .6s;
     animation-direction: forwards;
-    z-index: 5;
+    z-index: ${({mobile}) => mobile ? '0': '5'};;
 `
 
 export const CartContent = styled.div`
