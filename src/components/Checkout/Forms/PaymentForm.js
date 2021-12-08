@@ -13,24 +13,35 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
 
     const [data, setData] = React.useState(checkoutToken)
     const [loaded, setLoaded] = React.useState(false)
-    const {handleCaptureCheckout, discountCode} = React.useContext(GlobalContext)
+    const [discountError, setDiscountError] = React.useState(false)
+    const {handleCaptureCheckout, discountCode, displayAlert} = React.useContext(GlobalContext)
 
     React.useEffect(() => {
         const checkDiscount = async () => {
-            await commerce.checkout.checkDiscount(checkoutToken.id, { code: discountCode })
+            try{
+                await commerce.checkout.checkDiscount(checkoutToken.id, { code: discountCode })
+            }catch(e){
+                setDiscountError(true)
+            }
         }
         const setFetchData = async () => {
             if(discountCode.length > 0) await checkDiscount()
-            const fetchData = await commerce.checkout.checkShippingOption(checkoutToken.id, {
-                shipping_option_id: shippingData.shippingOption,
-                country: shippingData.shippingCountry,
-                region: shippingData.shippingSubdivision
-            })
-            setLoaded(true)
-            return setData(fetchData)
+            try{
+                const fetchData = await commerce.checkout.checkShippingOption(checkoutToken.id, {
+                    shipping_option_id: shippingData.shippingOption,
+                    country: shippingData.shippingCountry,
+                    region: shippingData.shippingSubdivision
+                })
+                console.log(fetchData)
+                setLoaded(true)
+                return setData(fetchData)
+            }catch(e){
+                displayAlert('Algo de errado aconteceu. Tente novamente.', 'danger', 3000)
+                setActiveStep(active => active - 1)
+            }
         }
         setFetchData()
-    }, [discountCode, checkoutToken, shippingData])
+    }, [discountCode, checkoutToken, shippingData, setActiveStep, displayAlert])
     
     async function handleSubmit(e, elements, stripe){
         e.preventDefault()
@@ -64,7 +75,7 @@ const PaymentForm = ({checkoutToken, setActiveStep, shippingData, timeout}) => {
     return (
         <>
         {loaded ? <div style={{width: '100%'}}>
-            <Review data={data} discountCode={discountCode}/>
+            <Review data={data} discountCode={discountCode} discountError={discountError}/>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({elements, stripe}) => (

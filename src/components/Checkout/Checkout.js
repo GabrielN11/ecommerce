@@ -18,6 +18,10 @@ const Checkout = () => {
     const { cart, order, error, refreshCart, setLoading } = React.useContext(GlobalContext)
     const navigate = useNavigate()
 
+    const setStep = React.useCallback((active) => {
+        setActiveStep(active)
+    }, [])
+
     const test = true //const for testing in case a credit card is not provided by the owner, switch to 'true' to emulate a successful order request
     const [finished, setFinished] = React.useState(false)
     const timeout = test ? () => {
@@ -56,8 +60,8 @@ const Checkout = () => {
     }
 
     const Form = () => activeStep === 0 ?
-        <AddressForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} next={next} shippingData={shippingData} /> :
-        <PaymentForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} shippingData={shippingData} timeout={timeout} />
+        <AddressForm checkoutToken={checkoutToken} setActiveStep={setActiveStep} next={next} shippingData={shippingData}/> :
+        <PaymentForm checkoutToken={checkoutToken} setActiveStep={setStep} shippingData={shippingData} timeout={timeout}/>
 
     return (
         <CheckoutWindow>
