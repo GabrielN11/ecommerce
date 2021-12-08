@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { Root } from "./styles";
 import { Header, Footer, Main } from './components'
 import { GlobalProvider, GlobalContext } from './components/GlobalContext';
-import Alert from './components/Alert/Alert'
 import './App.css'
 import Loading from './components/Loading/Loading';
+import Warning from './Warning';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
 }
 
 function Ecommerce() {
-  const { loading, alert, fetchCart, getCategories } = React.useContext(GlobalContext)
+  const { loading, fetchCart, getCategories } = React.useContext(GlobalContext)
 
   React.useEffect(() => {
     fetchCart()
@@ -30,7 +30,7 @@ function Ecommerce() {
         <Header />
         <Main>
           <Loading loading={loading}/>
-          {alert && <Alert alert={alert}/>}
+          <Warning/> {/*remove this component for a production scenario*/}
         </Main>
         <Footer />
       </Root>

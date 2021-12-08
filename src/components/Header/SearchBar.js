@@ -9,8 +9,8 @@ const SearchBar = ({setBar, color, mobile, handleToggle}) => {
     const navigate = useNavigate()
 
     React.useEffect(() => {
-        bar.current.focus()
-    }, [])
+        if(!mobile) bar.current.focus()
+    }, [mobile])
 
     function handleSubmit(e){
         e.preventDefault()

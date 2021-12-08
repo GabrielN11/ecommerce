@@ -6,6 +6,23 @@ body, html{
     margin: 0;
     padding: 0;
     font-family: 'Roboto', cursive;
+    scrollbar-color: grey #f8f9fa;
+    scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f8f9fa;
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+}
+  
+
+*::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 20px;
+    border: 3px solid #f8f9fa;
 }
 
 button{

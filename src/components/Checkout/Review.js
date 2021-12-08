@@ -23,7 +23,7 @@ const Review = ({ data, discountCode, discountError }) => {
             </h3> : null}
             {Object.entries(data.live.discount).length > 0 && !discountError && data.live.discount.product_ids.length > 0 ? <p>Parabéns! Cupom '{data.live.discount.code}' aceito! Desconto de {data.live.discount.amount_saved.formatted_with_symbol}.</p> : null}
             {Object.entries(data.live.discount).length === 0 && discountCode.length > 0 && !discountError ? <p style={{color: '#dc3545'}}>Código de cupom inválido.</p> : null}
-            {discountError && <p style={{color: '#dc3545'}}>Ocorreo um erro para processar o seu cupom de desconto. Tente novamente.</p>}
+            {discountError && <p style={{color: '#dc3545'}}>Ocorreu um erro para processar o seu cupom de desconto. Tente novamente.</p>}
             <h3>Total: <span>{data.live.total.formatted_with_symbol}</span></h3>
         </ReviewDiv>
     )

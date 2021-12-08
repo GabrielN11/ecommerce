@@ -29,23 +29,21 @@ export const CartMain = styled.div`
 `
 
 export const CartWindow = styled.div`
-    position: fixed;
+    position: ${({mobile}) => mobile ? 'relative' : 'fixed'};
     overflow-y: auto;
-    height: 100vh;
-    width: 500px;
+    min-height: ${({mobile}) => mobile ? 'calc(100vh - 220px)': 'initial'};
+    height: ${({mobile}) => mobile ? 'initial': '100vh'};
+    width: ${({mobile}) => mobile ? '100%': '500px'};
     padding: 10px;
     background-color: #fff;
-    right: 0;
-    bottom: 0;
+    right: ${({mobile}) => mobile ? 'unset': '0'};
+    bottom: ${({mobile}) => mobile ? 'unset': '0'};
     border-left: 1px solid #cdcdcd;
     box-shadow: -7px -1px 5px -7px rgba(0,0,0,0.76);
-    animation-name: ${({closeAnim}) => closeAnim ? hide : show};
+    animation-name: ${({closeAnim, mobile}) => mobile ? 'none' : closeAnim ? hide : show};
     animation-duration: .6s;
     animation-direction: forwards;
     z-index: 5;
-    @media(max-width: 550px){
-        width: 100vw;
-    }
 `
 
 export const CartContent = styled.div`

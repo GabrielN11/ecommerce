@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Spin } from '../Loading/styles'
 import { ItemTitle} from '../Products/styles'
 
-const Confirmation = ({order, error, finished /*finished is a test state only*/}) => {
+const Confirmation = ({order, error, finished, shippingData /*finished and shippingData are test states only*/}) => {
     
     if(!order.customer && !finished) return (
         <div style={{margin: 'auto 0'}}>
@@ -13,7 +13,7 @@ const Confirmation = ({order, error, finished /*finished is a test state only*/}
     )
     if(order.customer || finished) return (
         <div style={{textAlign: 'center', marginTop: '25px'}}>
-            <ItemTitle>Pedido enviado! Obrigado pela sua preferência {order.customer ? order.customer.firstname : 'Usuário de teste'}!</ItemTitle>
+            <ItemTitle>Pedido enviado! Obrigado pela sua preferência {order.customer ? order.customer.firstname : shippingData.firstName}!</ItemTitle>
             <p>Código do pedido: {order.customer_reference ? order.customer_reference : '123456789'}</p>
             <Link to='/'><CartButton color='#0071DC' size={30}>Concluir</CartButton></Link>
         </div>

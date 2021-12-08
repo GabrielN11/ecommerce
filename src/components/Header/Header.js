@@ -9,6 +9,7 @@ import SvgToggle from '../../assets/SvgToggle'
 import SideMenu from './SideMenu'
 import SvgSearch from '../../assets/SvgSearch'
 import SearchBar from './SearchBar'
+import { useMediaQuery } from 'react-responsive'
 
 
 const Header = () => {
@@ -19,6 +20,9 @@ const Header = () => {
     const [bar, setBar] = React.useState(false)
     const {cart, sideCart, setSideCart, categories} = React.useContext(GlobalContext)
     const location = useLocation()
+    const mediaQ = useMediaQuery({
+        query: '(max-width: 550px)'
+      })
     const handleScroll = React.useCallback(() => {
         if (window.scrollY > 120)
             return setScrolled(true)
@@ -49,7 +53,8 @@ const Header = () => {
                 <Logo><Link to='/'>E-Commerce</Link></Logo>
                 {!bar && <SvgSearch onClick={() => setBar(true)}/>}
                 {bar && <SearchBar setBar={setBar} color='#fff'/>}
-                {location.pathname !== '/checkout' && <SvgCart counter={cart.total_items} onClick={() => setSideCart(!sideCart)}/>}
+                {location.pathname !== '/checkout' && !mediaQ && <SvgCart counter={cart.total_items} onClick={() => setSideCart(!sideCart)}/>}
+                {location.pathname !== '/checkout' && mediaQ && <Link to='/cart'><SvgCart counter={cart.total_items}/></Link>}
                 <SvgToggle onClick={handleToggle}/>
                 {scrolled && <div
                     onClick={() => {
@@ -72,7 +77,7 @@ const Header = () => {
             </SubMenu>}
             </BottomHeader>
             {sideMenu && <SideMenu closeAnim={closeAnim} handleToggle={handleToggle} categories={categories}/>}
-            {sideCart && <Cart setSideCart={setSideCart} cart={cart}/>}
+            {sideCart && <Cart setSideCart={setSideCart}/>}
         </HeaderStyle>
     )
 }

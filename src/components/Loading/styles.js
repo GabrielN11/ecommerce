@@ -11,8 +11,7 @@ export const LoadingDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000;
-    opacity: .8;
+    background-color: rgba(0, 0, 0, 0.8);
     width: 100vw;
     height: 100vh;
     top: 0;

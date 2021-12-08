@@ -11,13 +11,17 @@ export const GlobalProvider = ({ children }) => {
     const [categories, setCategories] = React.useState([])
     const [loading, setLoading] = React.useState(false)
     const [sideLoading, setSideLoading] = React.useState(false)
-    const [sideCart, setSideCart] = React.useState(false)
+    const [sideCart, setCartMenu] = React.useState(false)
     const [discountCode, setDiscountCode] = React.useState('')
     const [order, setOrder] = React.useState({})
     const [error, setError] = React.useState(null)
 
 
     const { alert, displayAlert } = useAlert()
+
+    const setSideCart = React.useCallback((status) => {
+        setCartMenu(status)
+    }, [])
 
     const getCategories = React.useCallback(async () => {
         try {
@@ -43,7 +47,6 @@ export const GlobalProvider = ({ children }) => {
             const item = await commerce.cart.add(productId, quantity)
             setCart(item.cart)
             displayAlert(`${name} adicionado ao carrinho!`, 'success')
-            setSideCart(true)
         } catch (e) {
             displayAlert('Erro ao adicionar produto no carrinho. Tente novamente.', 'danger')
         }

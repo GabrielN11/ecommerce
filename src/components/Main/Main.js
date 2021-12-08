@@ -4,10 +4,10 @@ import ProductsGrid from '../Products/ProductsGrid'
 import { Routes, Route } from 'react-router'
 import { GlobalContext } from '../GlobalContext'
 import Product from '../Products/Product'
-import { Checkout } from '..'
+import { Cart, Checkout } from '..'
 
 const Main = ({children}) => {
-    const {products, fetchProducts, categories} = React.useContext(GlobalContext)
+    const {products, fetchProducts, categories, setSideCart} = React.useContext(GlobalContext)
 
     React.useEffect(() => {
         fetchProducts()
@@ -23,6 +23,7 @@ const Main = ({children}) => {
                 })}
                 <Route path='/product/:id' element={<Product/>}/>
                 <Route path='/checkout' element={<Checkout/>}/>
+                <Route path='/cart' element={<Cart setSideCart={setSideCart}/>}/>
             </Routes>
             {children}
         </MainStyle>
