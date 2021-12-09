@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router'
 import { GlobalContext } from '../GlobalContext'
 import Product from '../Products/Product'
 import { Cart, Checkout } from '..'
+import NotFound from '../NotFound/NotFound'
 
 const Main = ({children}) => {
     const {products, fetchProducts, categories, setSideCart} = React.useContext(GlobalContext)
@@ -24,6 +25,7 @@ const Main = ({children}) => {
                 <Route path='/product/:id' element={<Product/>}/>
                 <Route path='/checkout' element={<Checkout/>}/>
                 <Route path='/cart' element={<Cart setSideCart={setSideCart}/>}/>
+                <Route path='/*' element={<NotFound/>}/>
             </Routes>
             {children}
         </MainStyle>

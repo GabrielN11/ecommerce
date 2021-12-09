@@ -39,7 +39,6 @@ const Checkout = () => {
                     const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' })
                     setCheckoutToken(token)
                 } catch (error) {
-
                 }finally{
                     setLoading(false)
                 }
@@ -67,7 +66,7 @@ const Checkout = () => {
         <CheckoutWindow>
             <Head title='Checkout' description='Loja de produtos variados, entregamos produtos em todo o Brasil.' />
             <Stepper steps={steps} activeStep={activeStep} />
-            {activeStep === steps.length - 1 ? <Confirmation order={order} error={error} finished={finished} shippingData={shippingData} /> : checkoutToken && <Form />}
+            {activeStep >= steps.length - 1 ? <Confirmation order={order} error={error} finished={finished} shippingData={shippingData} /> : checkoutToken && <Form />}
         </CheckoutWindow>
     )
 }

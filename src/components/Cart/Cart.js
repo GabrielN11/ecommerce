@@ -4,13 +4,14 @@ import SvgX from '../../assets/SvgX'
 import CartItem from './CartItem'
 import { GlobalContext } from '../GlobalContext'
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
 import { useMediaQuery } from 'react-responsive'
 
 const Cart = ({ setSideCart }) => {
     const [closeAnim, setCloseAnim] = React.useState(false)
     const {emptyCart, setDiscountCode, discountCode, cart} = React.useContext(GlobalContext)
     const navigate = useNavigate()
+    const {pathname} = useLocation()
     const mediaQ = useMediaQuery({
         query: '(max-width: 550px)'
     })
@@ -20,8 +21,8 @@ const Cart = ({ setSideCart }) => {
             navigate('/cart')
             setSideCart(false)
         }
-        if(!mediaQ) navigate('/')
-    }, [mediaQ, navigate, setSideCart])
+        if(!mediaQ && pathname === '/cart') navigate('/')
+    }, [mediaQ, navigate, setSideCart, pathname])
 
     function handleClose() {
         setCloseAnim(true)
