@@ -47,7 +47,7 @@ const Cart = ({ setSideCart }) => {
                     <CodeInput type='text' placeholder='Digite o cupom aqui.' value={discountCode} onChange={({target}) => setDiscountCode(target.value.toUpperCase())}/>
                 </CartContainer>
                 <CartContainer>
-                    <TotalPrice>Total:</TotalPrice>
+                    <TotalPrice>Subtotal:</TotalPrice>
                     <TotalPrice>{cart.subtotal.formatted_with_symbol}</TotalPrice>
                 </CartContainer>
                 <CartContainer>
