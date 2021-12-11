@@ -119,8 +119,8 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
                         setText={setEmail} />
                     <InputText label='Digite o nome de sua cidade' title='Cidade' placeholder='Ex: Santos' required text={city}
                         setText={setCity} />
-                    <InputText label='Digite seu CEP / ZIP Code' title='CEP' placeholder='Ex: 70680159' number required text={code}
-                        setText={setCode} limit={8} />
+                    <InputText label='Digite seu CEP / Address Code' title='CEP' placeholder='Ex: 70680159' number required text={code}
+                        setText={setCode} />
                     <Select items={shippingCountries} value={shippingCountry} setText={setShippingCountry} required label='Selecione seu país' />
                     <Select items={shippingSubdivisions} value={shippingSubdivision} setText={setShippingSubdivision} required label='Selecione seu estado' />
                     <Select items={shippingOptions} value={shippingOption} setText={setShippingOption} required label='Selecione a opção de frete' />
