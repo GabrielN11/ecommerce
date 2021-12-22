@@ -36,6 +36,6 @@ function Ecommerce() {
       </Root>
     </BrowserRouter>
   );
-} //Testing netlify build
+} //Testing netlify build 
 
 export default App
