@@ -26,6 +26,9 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
     const [shippingOptions, setShippingOptions] = React.useState([])
     const [shippingOption, setShippingOption] = React.useState(shippingData.shippingOption || '')
 
+    const [defaultSubdivision, setDefaultsubdivision] = React.useState(null)
+    const [loading, setLoading] = React.useState(false)
+
     let isSubscribed = React.useRef()
     const { displayAlert } = React.useContext(GlobalContext)
     const navigate = useNavigate()
@@ -61,12 +64,13 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
             const finalArray = transformArray(subdivisions)
             if (isSubscribed.current) setShippingSubdivisions(finalArray)
             if (!shippingData.shippingSubdivision && isSubscribed.current)
-                setShippingSubdivision(finalArray[0].value)
+                console.log(defaultSubdivision)
+            setShippingSubdivision(defaultSubdivision ? defaultSubdivision : finalArray[0].value)
         } catch (e) {
             displayAlert('Algo de errado aconteceu, tente novamente mais tarde.', 'danger', 10000)
             navigate('/')
         }
-    }, [shippingCountry, shippingData.shippingSubdivision, displayAlert, navigate])
+    }, [shippingCountry, shippingData.shippingSubdivision, displayAlert, navigate, defaultSubdivision])
 
     const fetchShippingOptions = React.useCallback(async (checkoutTokenId, country) => {
         try {
@@ -100,6 +104,34 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
         }
     }, [])
 
+    React.useEffect(() => {
+        const fetchCode = async (cep) => {
+            try {
+                const result = await fetch(`https://ws.apicep.com/cep/${cep}.json`)
+                const json = await result.json()
+                console.log(json)
+                if (json.status === 200) {
+                    setDefaultsubdivision(json.state)
+                    setCity(json.city)
+                    setAddress(json.address + ', 0, ' + json.district)
+                    setShippingCountry('BR')
+                }
+            } catch (e) {
+
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        if (code.length === 8) {
+            setLoading(true)
+            const formattedCepArr = code.split('')
+            formattedCepArr.splice(5, 0, '-')
+            const formattedCep = formattedCepArr.join().replaceAll(',', '')
+            fetchCode(formattedCep)
+        }
+    }, [code])
+
     const handleSubmit = () => {
         const data = { firstName, lastName, address, email, city, code, shippingCountry, shippingSubdivision, shippingOption }
         next(data)
@@ -113,14 +145,14 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
                         setText={setFirstName} />
                     <InputText label='Digite seu sobrenome' title='Sobrenone' placeholder='Ex: Araújo de Mendonça' required text={lastName}
                         setText={setLastName} />
-                    <InputText label='Digite seu endereço' title='Endereço' placeholder='Ex: Rua Fulano de tal, 155, 12B' required text={address}
-                        setText={setAddress} />
                     <InputText label='Digite seu E-mail' title='Email' placeholder='Ex: ana123@gmail.com' type='email' required text={email}
                         setText={setEmail} />
-                    <InputText label='Digite o nome de sua cidade' title='Cidade' placeholder='Ex: Santos' required text={city}
-                        setText={setCity} />
                     <InputText label='Digite seu CEP / Address Code' title='CEP' placeholder='Ex: 70680159' number required text={code}
                         setText={setCode} />
+                    <InputText label='Digite seu endereço' title='Endereço' placeholder='Ex: Rua Fulano de tal, 155, 12B' required text={address}
+                        setText={setAddress} />
+                    <InputText label='Digite o nome de sua cidade' title='Cidade' placeholder='Ex: Santos' required text={city}
+                        setText={setCity} />
                     <Select items={shippingCountries} value={shippingCountry} setText={setShippingCountry} required label='Selecione seu país' />
                     <Select items={shippingSubdivisions} value={shippingSubdivision} setText={setShippingSubdivision} required label='Selecione seu estado' />
                     <Select items={shippingOptions} value={shippingOption} setText={setShippingOption} required label='Selecione a opção de frete' />
@@ -129,6 +161,7 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
                         <CartButton color='#0071DC' size={30}>Prosseguir</CartButton>
                     </ButtonContainer>
                 </CheckoutForm> : <Loading loading={true} />}
+            <Loading loading={loading} />
         </>
     )
 }
