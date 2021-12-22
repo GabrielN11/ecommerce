@@ -112,6 +112,7 @@ React.useEffect(() => {
             if (json.status === 200) {
                 setCity(json.city)
                 setAddress(json.address + ', 0, ' + json.district)
+                setShippingSubdivision(json.state)
             }
         } catch (e) {
 
@@ -120,14 +121,14 @@ React.useEffect(() => {
         }
     }
 
-    if (code.length === 8) {
+    if (code.length === 8 && shippingCountry === 'BR') {
         setLoading(true)
         const formattedCepArr = code.split('')
         formattedCepArr.splice(5, 0, '-')
         const formattedCep = formattedCepArr.join().replaceAll(',', '')
         fetchCode(formattedCep)
     }
-}, [code]) //you may remove this useEffect if your API doesn't deliver to Brazil
+}, [code, shippingCountry]) //you may remove this useEffect if your API doesn't deliver to Brazil
 
 const handleSubmit = () => {
     const data = { firstName, lastName, address, email, city, code, shippingCountry, shippingSubdivision, shippingOption }
@@ -144,14 +145,14 @@ return (
                     setText={setLastName} />
                 <InputText label='Digite seu E-mail' title='Email' placeholder='Ex: ana123@gmail.com' type='email' required text={email}
                     setText={setEmail} />
+                <Select items={shippingCountries} value={shippingCountry} setText={setShippingCountry} required label='Selecione seu país' />
                 <InputText label='Digite seu CEP / Address Code' title='CEP' placeholder='Ex: 70680159' number required text={code}
                     setText={setCode} />
+                <Select items={shippingSubdivisions} value={shippingSubdivision} setText={setShippingSubdivision} required label='Selecione seu estado' />
                 <InputText label='Digite seu endereço' title='Endereço' placeholder='Ex: Rua Fulano de tal, 155, 12B' required text={address}
                     setText={setAddress} />
                 <InputText label='Digite o nome de sua cidade' title='Cidade' placeholder='Ex: Santos' required text={city}
                     setText={setCity} />
-                <Select items={shippingCountries} value={shippingCountry} setText={setShippingCountry} required label='Selecione seu país' />
-                <Select items={shippingSubdivisions} value={shippingSubdivision} setText={setShippingSubdivision} required label='Selecione seu estado' />
                 <Select items={shippingOptions} value={shippingOption} setText={setShippingOption} required label='Selecione a opção de frete' />
                 <ButtonContainer>
                     <Link to='/'><CartButton color='#6c757d' size={30}>Cancelar</CartButton></Link>
