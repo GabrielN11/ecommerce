@@ -130,7 +130,7 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
             const formattedCep = formattedCepArr.join().replaceAll(',', '')
             fetchCode(formattedCep)
         }
-    }, [code])
+    }, [code]) //you may remove this useEffect if your API doesn't deliver to Brazil
 
     const handleSubmit = () => {
         const data = { firstName, lastName, address, email, city, code, shippingCountry, shippingSubdivision, shippingOption }
