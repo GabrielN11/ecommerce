@@ -123,6 +123,9 @@ export const CartButton = styled.button`
     background-color: ${({color}) => color};
     border: none;
     color: #fff;
+    &:disabled{
+        opacity: 0.7;
+    }
 `
 
 export const CartInput = styled.input`

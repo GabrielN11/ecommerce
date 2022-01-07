@@ -50,7 +50,6 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
             const finalArray = transformArray(countries)
             if (isSubscribed.current) setShippingCountries(finalArray)
             if (!shippingData.shippingCountry && isSubscribed.current)
-                console.log(countries)
             setShippingCountry(finalArray[0].value)
         } catch (e) {
             displayAlert('Algo de errado aconteceu, tente novamente mais tarde.', 'danger', 10000)
@@ -60,7 +59,6 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
 
     const fetchShippingSubdivisions = React.useCallback(async (checkoutTokenId, country) => {
         try {
-            console.log(shippingCountry)
             const { subdivisions } = await commerce.services.localeListShippingSubdivisions(checkoutTokenId, country)
             const finalArray = transformArray(subdivisions)
             if (isSubscribed.current) setShippingSubdivisions(finalArray)
@@ -70,7 +68,7 @@ const AddressForm = ({ checkoutToken, next, shippingData }) => {
         displayAlert('Algo de errado aconteceu, tente novamente mais tarde.', 'danger', 10000)
         navigate('/')
     }
-}, [shippingCountry, shippingData.shippingSubdivision, displayAlert, navigate])
+}, [shippingData.shippingSubdivision, displayAlert, navigate])
 
 const fetchShippingOptions = React.useCallback(async (checkoutTokenId, country) => {
     try {
