@@ -18,6 +18,8 @@ export const FooterLink = styled.a`
     color: #bbb;
     text-decoration: none;
     transition: opacity .4s;
+    display: flex;
+    align-items: center;
     &:hover{
         opacity: 0.6;
     }
